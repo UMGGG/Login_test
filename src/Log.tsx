@@ -22,7 +22,7 @@ function Log() {
 	// 여기에서 아이디와 비밀번호를 적합한지 검증
 	// 적합한 경우 '/Home' 페이지로 이동
 	if (username === 'JAE' && password === '1q2w3e') {
-		// 예시로 로그인 성공 시 sessionStorage에 isLoggedIn 상태를 저장한 것으로 가정
+		// 로그인 성공 시 localStorage에 isLoggedIn 상태를 저장
 		localStorage.setItem('isLoggedIn', 'true');
 		setIsLoggedIn(true);
 		navigate('/Home');
@@ -33,35 +33,30 @@ function Log() {
 	};
 
 	return (
-	<div>
+	<div className = 'wrapper'>
 		{isLoggedIn ? (
 		<div>
 			<p>이미 로그인되었습니다. /Home 페이지로 이동합니다.</p>
 			<button onClick={() => navigate('/Home')}>Go to Home</button>
 		</div>
 		) : (
-		<div>
-			<h1>로그인</h1>
+		<div className = 'main'>
+			<h1 className = 'logo'>Login</h1>
 			<div>
-			<label>
-				Username :
-				<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-			</label>
+				<input className='account' placeholder='user ID' type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+				<input className='account' placeholder='Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 			</div>
-			<div>
-			<label>
-				Password :
-				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-			</label>
-			</div>
-			<button onClick={handleLogin}>Login</button>
-
-			{showModal && (
-			<div>
-				<p>아이디와 비밀번호가 적합하지 않습니다.</p>
-				<button onClick={() => setShowModal(false)}>닫기</button>
-			</div>
-			)}
+			<button className='my_btn' onClick={handleLogin}>Login</button>
+		</div>
+		)}
+		{showModal && (
+		<div className='modal'>
+			<>
+				<div className='modal-content'>
+					<p>아이디와 비밀번호가 적합하지 않습니다.</p>
+					<button onClick={() => setShowModal(false)}>닫기</button>
+				</div>
+			</>
 		</div>
 		)}
 	</div>

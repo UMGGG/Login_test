@@ -34,14 +34,13 @@ function Home(){
 
 	return (
 		<div>
+			<button onClick={onIncrease}>인사 바꾸기</button>
+			<button onClick={logout}>로그 아웃</button>
 			<h1>홈</h1>
 			<p>
 				이곳은 홈이에요, 가장 먼저 보여주는 페이지임
 				<br />{greeting[number % 3]}
-				</p>
-			<button onClick={onIncrease}>인사 바꾸기</button>
-			<br />
-			<button onClick={logout}>로그 아웃</button>
+			</p>
 		</div>
 	);
 };
