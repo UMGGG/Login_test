@@ -11,8 +11,8 @@ function Log() {
 
   // 이미 로그인되었는지 확인
 	useEffect(() => {
-	// 예시로 sessionStorage isLoggedIn 상태를 저장한 것으로 가정합니다.
-	const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+	// 예시로 sessionStorage에 isLoggedIn 상태를 저장한 것으로 가정합니다.
+	const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
 	if (storedIsLoggedIn === 'true') {
 		setIsLoggedIn(true);
 	}
@@ -22,8 +22,8 @@ function Log() {
 	// 여기에서 아이디와 비밀번호를 적합한지 검증
 	// 적합한 경우 '/Home' 페이지로 이동
 	if (username === 'JAE' && password === '1q2w3e') {
-		// 로그인 성공 시 localStorage에 isLoggedIn 상태를 저장
-		localStorage.setItem('isLoggedIn', 'true');
+		// 로그인 성공 시 sessionStorage에 isLoggedIn 상태를 저장
+		sessionStorage.setItem('isLoggedIn', 'true');
 		setIsLoggedIn(true);
 		navigate('/Home');
 	} else {

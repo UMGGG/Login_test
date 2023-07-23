@@ -2,7 +2,6 @@ import React, {useState, createContext} from 'react';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 
 import Home from './Home';
-import About from './About';
 import NotFound from './NotFound404';
 import Log from './Log';
 
@@ -16,7 +15,7 @@ function App() {
 	// 로그아웃 함수 정의
 	const logout = () => {
 	setIsLoggedIn(false);
-	localStorage.removeItem('isLoggedIn');
+	sessionStorage.removeItem('isLoggedIn');
 	};
 
 	return (
@@ -27,7 +26,6 @@ function App() {
 			<Routes>
 				<Route path = "/" element={<Log />}/>
 				<Route path = "/Home" element={<Home />}/>
-				<Route path = "/about" element={<About />}/>
 				<Route path = "*" element={<NotFound />}/>
 			</Routes>
 		</AuthContext.Provider>
