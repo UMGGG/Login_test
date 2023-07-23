@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, createContext} from 'react';
+import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
+
+import Home from './Home';
+import About from './About';
+import NotFound from './NotFound404';
+import Log from './Log';
+
+import AuthContext from './context/AuthContext';
+
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	// 로그아웃 함수 정의
+	const logout = () => {
+	setIsLoggedIn(false);
+	localStorage.removeItem('isLoggedIn');
+	};
+
+	return (
+	<>
+	<div>
+	<BrowserRouter>
+		<AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout }}> {/* 다른 컴포넌트에서 사용하기위해*/}
+			<Routes>
+				<Route path = "/" element={<Log />}/>
+				<Route path = "/Home" element={<Home />}/>
+				<Route path = "/about" element={<About />}/>
+				<Route path = "*" element={<NotFound />}/>
+			</Routes>
+		</AuthContext.Provider>
+	</BrowserRouter>
+	</div>
+	</>
+	);
 }
 
 export default App;
