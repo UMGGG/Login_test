@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import Home from './Home';
 import NotFound from './NotFound404';
 import Log from './Log';
+import UserList from './UserList';
 
 import AuthContext from './context/AuthContext';
 
@@ -26,6 +27,7 @@ function App() {
 			<Routes>
 				<Route path = "/" element={<Log />}/>
 				<Route path = "/Home" element={<Home />}/>
+				<Route path = "/User" element={<UserList />}/>
 				<Route path = "*" element={<NotFound />}/>
 			</Routes>
 		</AuthContext.Provider>

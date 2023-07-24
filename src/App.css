@@ -97,3 +97,14 @@
   border: 1px solid #888;
   width: 30%; /* Could be more or less, depending on screen size */
 }
+
+.friend-wrapper {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  background-color: #fefefe;
+  border: 2px solid lightgrey;
+  border-radius: 3px;
+  width: 350px;
+  height: 400px;
+  overflow: auto;
+}
