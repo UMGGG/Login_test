@@ -6,6 +6,8 @@ function UserList() {
 	const [userCount, setUserCount] = useState(3);
 	const [newNickname, setNickname] = useState('');
 	const [myData, setMyData] = useState({myNickname: 'JAE', profileNum:1});
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	// id번호 수정해야함
 	const [userData, setData] = useState([
 	{ id: 0, nickname: 'JAEEE', profileNum:1, win: 49, lose: 25, isFriend: 1},
@@ -13,7 +15,7 @@ function UserList() {
 	{ id: 2, nickname: 'JAEEE3', profileNum:3, win: 429, lose: 23, isFriend: 0},
 	]);
 
-	//useEffect로 뭔가 일어날때마다 새로 API요청해서 새로고침해줘야함
+	//useEffect로 뭔가 일어날때마다 새로 API요청해서 myData랑 userData새로고침해줘야함
 
 	// "닉네임 프로필이미지번호 승 패 친구여부|닉네임 프로필이미지번호 승 패 친구여부|닉네임 프로필이미지번호 승 패 친구여부" 형태로 받아오기
 	// API에서 문자열 하나로 쭉 들어오면 세개씩 끊어서 반복문 돌리기
@@ -71,6 +73,25 @@ function UserList() {
 		setData(copiedData);
 	}
 
+	function fixProfile(){
+		//중복된 닉네임이 없는지 검사
+		//중복된 닉네임이 없다면 이미지 업로드
+		if (selectedFile) {
+			const formData = new FormData();
+			formData.append('file', selectedFile);
+			//fetch하고 formData를 POST하기
+		}
+	}
+
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		// 파일을 선택했을 때 호출
+		if (e.target.files && e.target.files.length > 0){
+			const file = e.target.files[0];
+			setSelectedFile(file);
+			setImageUrl(URL.createObjectURL(file));
+		}
+	};
+
 	return (
 	<div className='friend-wrapper'>
 			<button onClick={() => setShowModalRegister(true)}>내 프로필</button>
@@ -126,13 +147,13 @@ function UserList() {
 						<div>
 							닉네임 <input className='account' placeholder={myData.myNickname} type="text" value={newNickname} onChange={(e) => setNickname(e.target.value)} />
 							<p>
-								프로필 선택
+								프로필 사진
+								<br />
+								<input type="file" accept='image/*' onChange={handleFileChange}></input>
 								<br/>
-								<img src={"img/img1.png"} alt="profile image" width="100" height = "100" />
-								<img src={"img/img2.png"} alt="profile image" width="100" height = "100" />
-								<img src={"img/img3.png"} alt="profile image" width="100" height = "100" />
+								{imageUrl && <img src={imageUrl} width="100" height = "100" />}
 							</p>
-							<button>저장</button>
+							<button onClick={fixProfile}>저장</button>
 						</div>
 					</div>
 				</div>
