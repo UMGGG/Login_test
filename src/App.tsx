@@ -27,7 +27,6 @@ function App() {
 			<Routes>
 				<Route path = "/" element={<Log />}/>
 				<Route path = "/Home" element={<Home />}/>
-				<Route path = "/User" element={<UserList />}/>
 				<Route path = "*" element={<NotFound />}/>
 			</Routes>
 		</AuthContext.Provider>
