@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
 
 function Log() {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
 	const [showModal, setShowModal] = useState(false);
 	const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 	const navigate = useNavigate();
@@ -21,7 +19,8 @@ function Log() {
 	function handleLogin() {
 		// 여기에서 아이디와 비밀번호를 적합한지 검증
 		// 적합한 경우 '/Home' 페이지로 이동
-		if (username === 'JAE' && password === '1q2w3e') {
+		let isValid = 1;
+		if (isValid) {
 			// 로그인 성공 시 sessionStorage에 isLoggedIn 상태를 저장
 			sessionStorage.setItem('isLoggedIn', 'true');
 			setIsLoggedIn(true);
@@ -32,6 +31,9 @@ function Log() {
 		}
 	};
 
+	function register() {
+	}
+
 	return (
 	<div className = 'wrapper'>
 		{isLoggedIn ? (
@@ -41,12 +43,8 @@ function Log() {
 		</div>
 		) : (
 		<div className = 'main'>
-			<h1 className = 'logo'>Login</h1>
-			<div>
-				<input className='account' placeholder='user ID' type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-				<input className='account' placeholder='Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-			</div>
-			<button className='my_btn' onClick={handleLogin}>Login</button>
+			<h1 className = 'logo'>로그인</h1>
+			<button className='my_btn' onClick={handleLogin}>Intra login</button>
 		</div>
 		)}
 		{showModal && (

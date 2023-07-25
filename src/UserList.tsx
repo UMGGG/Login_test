@@ -2,37 +2,42 @@ import React, { useState } from 'react';
 
 function UserList() {
 	const [showModals, setShowModals] = useState([false, false, false]);
+	const [showModalRegister, setShowModalRegister] = useState(false);
 	const [userCount, setUserCount] = useState(3);
+	const [newNickname, setNickname] = useState('');
+	const [myData, setMyData] = useState({myNickname: 'JAE', profileNum:1});
 	// id번호 수정해야함
-	const [data, setData] = useState([
-	{ id: 0, nickname: 'JAEEE', win: 49, lose: 25, isfriend: 1},
-	{ id: 1, nickname: 'JAEEE2', win: 19, lose: 5, isfriend: 1},
-	{ id: 2, nickname: 'JAEEE3', win: 429, lose: 23, isfriend: 0},
+	const [userData, setData] = useState([
+	{ id: 0, nickname: 'JAEEE', profileNum:1, win: 49, lose: 25, isFriend: 1},
+	{ id: 1, nickname: 'JAEEE2', profileNum:2, win: 19, lose: 5, isFriend: 1},
+	{ id: 2, nickname: 'JAEEE3', profileNum:3, win: 429, lose: 23, isFriend: 0},
 	]);
 
 	//useEffect로 뭔가 일어날때마다 새로 API요청해서 새로고침해줘야함
 
-	// "닉네임 승 패 친구여부|닉네임 승 패 친구여부|닉네임 승 패 친구여부" 형태로 받아오기
+	// "닉네임 프로필이미지번호 승 패 친구여부|닉네임 프로필이미지번호 승 패 친구여부|닉네임 프로필이미지번호 승 패 친구여부" 형태로 받아오기
 	// API에서 문자열 하나로 쭉 들어오면 세개씩 끊어서 반복문 돌리기
+
 	const AddData = (dataString:string) => {
-		const [nickname, win, lose, isfriend] = dataString.split(' ');
+		const [nickname, profileNum, win, lose, isFriend] = dataString.split(' ');
 
 		const newData = {
 			id: userCount,
 			nickname: nickname,
+			profileNum: parseInt(profileNum),
 			win: parseInt(win),
 			lose: parseInt(lose),
-			isfriend: parseInt(isfriend),
+			isFriend: parseInt(isFriend),
 		};
 		setShowModals([...showModals, false]);
-		const updatedData = [...data, newData];
+		const updatedData = [...userData, newData];
 		setUserCount(userCount + 1);
 		setData(updatedData);
 	};
 
-	// 임시
+	// 임시로 사용
 	function clickAdd(){
-		const str = "JAE" + userCount + " 22 25 0";
+		const str = "JAE" + userCount + " 2 22 25 0";
 		AddData(str);
 	}
 
@@ -53,53 +58,55 @@ function UserList() {
 	}
 
 	function follow(index:number){
-		//DB에 있는 isfriend 1로 바꿔달라고 하기
-		let copiedData = [... data];
-		copiedData[index].isfriend = 1;
+		//DB에 있는 isFriend 1로 바꿔달라고 하기
+		let copiedData = [... userData];
+		copiedData[index].isFriend = 1;
 		setData(copiedData);
 	}
 
 	function unFollow(index:number){
-		//DB에 있는 isfriend 0으로 바꿔달라고 하기
-		let copiedData = [... data];
-		copiedData[index].isfriend = 0;
+		//DB에 있는 isFriend 0으로 바꿔달라고 하기
+		let copiedData = [... userData];
+		copiedData[index].isFriend = 0;
 		setData(copiedData);
 	}
+
 	return (
 	<div className='friend-wrapper'>
+			<button onClick={() => setShowModalRegister(true)}>내 프로필</button>
 		<button>r</button>
 		{/* 배열을 순회하며 요소를 출력 */}
-		{data.map((item, index) => (
+		{userData.map((item, index) => (
 		<div key={index}>
 			<p className='profile-left'>
-				<img src="img/img1.png" alt="profile image" width="50" height = "50" />
+				<img src={"img/img" + userData[index].profileNum + ".png"} alt="profile image" width="50" height = "50" />
 				{item.nickname}<br />
 				승: {item.win} 패:{item.lose}
 			</p>
 			<p>
-				{data[index].isfriend === 1 && (
+				{userData[index].isFriend === 1 && (
 					<button onClick={() => {unFollow(index)}}>언팔로우</button>)}
-				{data[index].isfriend === 0 && (
-					<button onClick={clickAdd}>팔로우</button>)}
+				{userData[index].isFriend === 0 && (
+					<button onClick={() => {follow(index)}}>팔로우</button>)}
 				<button onClick={() => {sendGameMatch(index)}}>게임 신청</button>
 				<button onClick={() => {profilePopup(index)}}>프로필 보기</button>
 			</p>
 			{showModals[index] && (
 			<div className='modal'>
 				<div className='modal-content'>
-					<p><img src="img/img1.png" alt="profile image" width="100" height = "100" /></p>
+					<p><img src={"img/img" + userData[index].profileNum + ".png"} width="100" height = "100" /></p>
 					<h2>
-						{data[index].nickname} 의 프로필
+						{userData[index].nickname} 의 프로필
 					</h2>
-					<p>승: {data[index].win} 패:{data[index].lose}</p>
+					<p>승: {userData[index].win} 패:{userData[index].lose}</p>
 					<p>최근 전적</p>
 					<p>
-						{/* 전적 들어갈곳 */}
+						{/* 전적 받아와서 들어갈곳 */}
 					</p>
-						{data[index].isfriend === 1 && (
+						{userData[index].isFriend === 1 && (
 						<button onClick={() => {unFollow(index)}}>언팔로우</button>)}
-						{data[index].isfriend === 0 && (
-						<button onClick={clickAdd}>팔로우</button>)}
+						{userData[index].isFriend === 0 && (
+						<button onClick={() => {follow(index)}}>팔로우</button>)}
 						<button>게임 신청</button>
 					<p>
 					<button onClick={() => profilePopdown(index)}>닫기</button>
@@ -107,6 +114,31 @@ function UserList() {
 				</div>
 			</div>
 			)}
+			{showModalRegister && (
+		<div className='modal'>
+			<>
+				<div className='modal-content'>
+					<div className='close-btn'>
+						<button onClick={() => setShowModalRegister(false)}>X</button>
+					</div>
+					<h2>내 프로필</h2>
+					<div className='register-inside'>
+						<div>
+							닉네임 <input className='account' placeholder={myData.myNickname} type="text" value={newNickname} onChange={(e) => setNickname(e.target.value)} />
+							<p>
+								프로필 선택
+								<br/>
+								<img src={"img/img1.png"} alt="profile image" width="100" height = "100" />
+								<img src={"img/img2.png"} alt="profile image" width="100" height = "100" />
+								<img src={"img/img3.png"} alt="profile image" width="100" height = "100" />
+							</p>
+							<button>저장</button>
+						</div>
+					</div>
+				</div>
+			</>
+		</div>
+		)}
 		</div>
 		))}
 	</div>
