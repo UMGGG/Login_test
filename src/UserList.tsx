@@ -17,7 +17,7 @@ function UserList() {
 
 	//useEffect로 뭔가 일어날때마다 새로 API요청해서 myData랑 userData새로고침해줘야함
 
-	// "닉네임 프로필이미지번호 승 패 친구여부|닉네임 프로필이미지번호 승 패 친구여부|닉네임 프로필이미지번호 승 패 친구여부" 형태로 받아오기
+	// "닉네임 프로필주소 승 패 친구여부|닉네임 프로필주소 승 패 친구여부|닉네임 프로필주소 승 패 친구여부" 형태로 받아오기
 	// API에서 문자열 하나로 쭉 들어오면 세개씩 끊어서 반복문 돌리기
 
 	const AddData = (dataString:string) => {
@@ -74,12 +74,12 @@ function UserList() {
 	}
 
 	function fixProfile(){
-		//중복된 닉네임이 없는지 검사
+		//중복된 닉네임이 없는지 검사, 중복이 있으면 팝업띄우기
 		//중복된 닉네임이 없다면 이미지 업로드
 		if (selectedFile) {
 			const formData = new FormData();
 			formData.append('file', selectedFile);
-			//fetch하고 formData를 POST하기
+			//fetch -> formData를 body로 POST
 		}
 	}
 

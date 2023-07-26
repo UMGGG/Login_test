@@ -7,6 +7,10 @@ function Log() {
 	const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 	const navigate = useNavigate();
 
+	const [data, setData] = useState<string | null> (null);
+	const [isImage, setIsImage] = useState<boolean> (false);
+	const [verCode, setVerCode] = useState('');
+
   // 이미 로그인되었는지 확인
 	useEffect(() => {
 		// 예시로 sessionStorage에 isLoggedIn 상태를 저장한 것으로 가정합니다.
@@ -17,8 +21,6 @@ function Log() {
 	);
 
 	function handleLogin() {
-		// 여기에서 아이디와 비밀번호를 적합한지 검증
-		// 적합한 경우 '/Home' 페이지로 이동
 		let isValid = 1;
 		if (isValid) {
 			// 로그인 성공 시 sessionStorage에 isLoggedIn 상태를 저장
@@ -31,7 +33,31 @@ function Log() {
 		}
 	};
 
-	function register() {
+	const authLogin = async () => {
+		try {
+			const response = await fetch('URL');
+			const contentType = response.headers.get('content-type');
+			setIsImage(!!contentType && contentType.startsWith('image/'));
+
+			if (contentType && contentType.startsWith('image/')){
+				const blobData = await response.blob();
+				setData(URL.createObjectURL(blobData));
+			}
+			else { // 이미지가 아니라면 text로 가져와서 저장
+				const textData = await response.text();
+				setData(textData);
+			}
+			setShowModal(true);
+		}
+		catch(error) {
+			const textData = "Error at fetch data";
+			setData(textData);
+			console.error("Error at fetch data.", error);
+		}
+	};
+
+	function authSecondLogin() {
+
 	}
 
 	return (
@@ -44,17 +70,25 @@ function Log() {
 		) : (
 		<div className = 'main'>
 			<h1 className = 'logo'>로그인</h1>
-			<button className='my_btn' onClick={handleLogin}>Intra login</button>
+			<button className='my_btn' onClick={authLogin}>Intra login</button>
+			{/* authLogin으로 대체해야함 */}
 		</div>
 		)}
 		{showModal && (
 		<div className='modal'>
-			<>
-				<div className='modal-content'>
-					<p>아이디와 비밀번호가 적합하지 않습니다.</p>
-					<button onClick={() => setShowModal(false)}>닫기</button>
-				</div>
-			</>
+			<div className='close-btn'>
+			<button onClick={() => setShowModal(false)}>X</button>
+			</ div>
+			<div>
+			{isImage ? (
+				<img src={data as string} alt="QR code" />
+			) : (
+				<p>{data}</p>
+			)
+			}
+			<input placeholder= "verify code" type="text" value={verCode} onChange={(e) => setVerCode(e.target.value)} />
+			<button>인증</button>
+			</div>
 		</div>
 		)}
 	</div>
