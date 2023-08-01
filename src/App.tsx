@@ -11,7 +11,9 @@ import AuthContext from './context/AuthContext';
 import './App.css';
 
 function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [nickName, setNickName] = useState('');
+	const [profileURL, setProfileURL] = useState('');
 
 	// 로그아웃 함수 정의
 	const logout = () => {
@@ -23,7 +25,7 @@ function App() {
 	<>
 	<div>
 	<BrowserRouter>
-		<AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout }}> {/* 다른 컴포넌트에서 사용하기위해*/}
+		<AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, logout, nickName, setNickName, profileURL, setProfileURL}}> {/* 다른 컴포넌트에서 사용하기위해*/}
 			<Routes>
 				<Route path = "/" element={<Log />}/>
 				<Route path = "/Home" element={<Home />}/>

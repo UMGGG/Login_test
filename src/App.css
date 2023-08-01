@@ -100,13 +100,19 @@
 
 .friend-wrapper {
   margin-top: 0px;
-  margin-bottom: 20px;
+  background-color: #fefefe;
+  width: 350px;
+  height: 400px;
+  overflow: auto;
+}
+
+.friend-wrapper-out {
+  margin-top: 0px;
   background-color: #fefefe;
   border: 2px solid lightgrey;
   border-radius: 3px;
   width: 350px;
   height: 400px;
-  overflow: auto;
 }
 
 .profile-left {
