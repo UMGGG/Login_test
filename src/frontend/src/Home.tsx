@@ -17,7 +17,7 @@ function Home(){
 	// 이미 로그인되었는지 확인
 	useEffect(() => {
 	// 예시로 sessionStorage에 isLoggedIn 상태를 저장한 것으로 가정
-	const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+	const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
 	if (storedIsLoggedIn === 'true') {
 		setIsLoggedIn(true);
 	}

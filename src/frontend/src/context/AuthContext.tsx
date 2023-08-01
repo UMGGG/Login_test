@@ -2,21 +2,25 @@ import React, { createContext } from 'react';
 
 interface AuthContextProps {
   isLoggedIn: boolean;
-  nickName: string;
+  userNickname: string;
   profileURL: string;
+  jwt: string;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  setNickName: React.Dispatch<React.SetStateAction<string>>;
+  setUserNickname: React.Dispatch<React.SetStateAction<string>>;
   setProfileURL: React.Dispatch<React.SetStateAction<string>>;
+  setJwt: React.Dispatch<React.SetStateAction<string>>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
-  isLoggedIn: true,
-  nickName: '',
+  isLoggedIn: false,
+  userNickname: '',
   profileURL: '',
+  jwt: '',
   setIsLoggedIn: () => {},
-  setNickName: () => {},
+  setUserNickname: () => {},
   setProfileURL: () => {},
+  setJwt: () => {},
   logout: () => {},
 });
 
